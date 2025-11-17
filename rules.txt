@@ -1,0 +1,21 @@
+The goal of the game is to score the most
+points.
+
+Gameplay: Shapes made of blocks fall from
+the top of the playing field. The player must
+form lines of blocks to score points.
+
+The more lines a single shape creates, the
+more points the player receives:
+1 line = 100 points;
+2 lines = 300 points;
+3 lines = 700 points;
+4 lines (Tetris) = 1500 points.
+
+Designations:
+Lines - Number of lines formed.
+TPT - Percentage of lines formed by Tetris out
+of all lines formed.
+Scores - Number of points scored.
+
+All possible shapes in the game:
