@@ -92,71 +92,81 @@ def ReturnGameMenu(event):
 
 def NGameMenu(event):
 
+    global frame_game_field
+    frame_game_field.destroy()
+
+    frame_game_field = tk.Frame(frame_game,
+                            width = 400,
+                            height = 800,
+                            bg = "black")
+
     f = open("field.txt", "r")
+    score = f.readline().replace("\n","")
+    lines = f.readline().replace("\n","")
+    trt = f.readline().replace("\n","")
     a = []
     for i in f:
         a.append(i.replace("\n","").split(","))
+    f.close()
 
     y = 760
     for i in a:
         x = 0
         for j in i:
             if j == "1":
-                shape_game = tk.Label(frame_game,
+                shape_game = tk.Label(frame_game_field,
                                       image = big_blue_block_image,
                                       borderwidth = 0)
                 shape_game.place(x = x, y = y)
                 
             elif j == "2":
-                shape_game = tk.Label(frame_game,
+                shape_game = tk.Label(frame_game_field,
                                       image = big_green_block_image,
                                       borderwidth = 0)
                 shape_game.place(x = x, y = y)
                 
             elif j == "3":
-                shape_game = tk.Label(frame_game,
+                shape_game = tk.Label(frame_game_field,
                                       image = big_purple_block_image,
                                       borderwidth = 0)
                 shape_game.place(x = x, y = y)
 
             elif j == "4":
-                shape_game = tk.Label(frame_game,
+                shape_game = tk.Label(frame_game_field,
                                       image = big_red_block_image,
                                       borderwidth = 0)
                 shape_game.place(x = x, y = y)
 
             elif j == "5":
-                shape_game = tk.Label(frame_game,
+                shape_game = tk.Label(frame_game_field,
                                       image = big_yellow_block_image,
                                       borderwidth = 0)
                 shape_game.place(x = x, y = y)
                 
             x += 40
         y -= 40
-    f.close()
 
-    score = "0"
+    frame_game_field.place(x = 0, y = 0)
+
     frame_game_statistics_score_user = tk.Label(frame_game_statistics,
-                                           text = score,
-                                           fg = "white",
-                                           bg = "gray15",
-                                           font = ("system",25))
+                                                text = score,
+                                                fg = "white",
+                                                bg = "gray15",
+                                                font = ("system",25))
     frame_game_statistics_score_user.place(x = 10, y = 445)
 
-    lines = "0"
     frame_game_statistics_lines_user = tk.Label(frame_game_statistics,
-                                           text = lines,
-                                           fg = "white",
-                                           bg = "gray15",
-                                           font = ("system",25))
+                                                text = lines,
+                                                fg = "white",
+                                                bg = "gray15",
+                                                font = ("system",25))
     frame_game_statistics_lines_user.place(x = 10, y = 565)
 
-    trt = "0"
     frame_game_statistics_trt_user = tk.Label(frame_game_statistics,
-                                           text = trt+"%",
-                                           fg = "white",
-                                           bg = "gray15",
-                                           font = ("system",25))
+                                              text = trt + "%",
+                                              fg = "white",
+                                              bg = "gray15",
+                                              font = ("system",25))
     frame_game_statistics_trt_user.place(x = 10, y = 685)
     
     frame_game.update()
@@ -206,22 +216,22 @@ main_choice = 0
 
 label_menu_start = tk.Label(frame_main_menu,
                             text = "> START <",
-                            foreground = "white",
-                            background = "black",
+                            fg = "white",
+                            bg = "black",
                             font = ("system",80))
 label_menu_start.place(x = 129, y = 199)
 
 label_menu_top = tk.Label(frame_main_menu,
                           text = "TOP",
-                          foreground = "white",
-                          background = "black",
+                          fg = "white",
+                          bg = "black",
                           font = ("system",80))
 label_menu_top.place(x = 229, y = 333)
 
 label_menu_rules = tk.Label(frame_main_menu,
                             text = "RULES",
-                            foreground = "white",
-                            background = "black",
+                            fg = "white",
+                            bg = "black",
                             font = ("system",80))
 label_menu_rules.place(x = 182, y = 467)
 
@@ -238,6 +248,10 @@ frame_game = tk.Frame(root,
                       height = 800,
                       bg = "black")
 
+frame_game.bind("n", NGameMenu)
+frame_game.bind("<Return>", ReturnGameMenu)
+
+    #Поле с статистикой
 frame_game_statistics = tk.Frame(frame_game,
                                  width = 200,
                                  height = 800,
@@ -264,9 +278,13 @@ frame_game_statistics_trt = tk.Label(frame_game_statistics,
                                        bg = "gray15",
                                        font = ("system",25))
 frame_game_statistics_trt.place(x = 10, y = 640)
-            
-frame_game.bind("n", NGameMenu)
-frame_game.bind("<Return>", ReturnGameMenu)
+
+    #Игровое полe
+frame_game_field = tk.Frame(frame_game,
+                            width = 400,
+                            height = 800,
+                            bg = "black")
+frame_game_field.place(x = 0, y = 0)
 
 #Настройка окна с топом
 frame_top = tk.Frame(root,
@@ -332,6 +350,8 @@ label_rules_rules = tk.Label(frame_rules,
                              bg = "black",
                              font = ("system",17))
 label_rules_rules.place(x = 0, y = 0)
+
+frame_rules.bind("<Return>", ReturnRulesMenu)
 
     #Фигуры в окне с правилами
         #1
@@ -480,7 +500,5 @@ shape_rules_7_4 = tk.Label(frame_rules,
                            image = green_block_image,
                            borderwidth = 0)
 shape_rules_7_4.place(x = 520, y = 730)
-
-frame_rules.bind("<Return>", ReturnRulesMenu)
 
 root.mainloop()
